@@ -17,15 +17,6 @@ int main(int argc, char *argv[])
 {
     const string file_path = "data.dat";
 
-    /*
-    c if null
-    r
-    u / d(w)
-    */
-    //
-
-    /**/
-
   
     //list<int> data_list;
     Data data = {
@@ -38,11 +29,10 @@ int main(int argc, char *argv[])
 
     cout << data.i << endl;
 
+    data.i = 12334;
+    cout << data.i << endl;
 
-    //data.i = 12334;
-    //cout << data.i << endl;
-
-    //plainCRUD.write(data);
+    plainCRUD.write(data);
 
 
     system("pause");
