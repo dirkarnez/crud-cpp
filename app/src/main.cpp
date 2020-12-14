@@ -7,8 +7,8 @@
 using namespace std;
 
 struct Data {
-    int i;
-    double d;
+    int id;
+    char name[50];
 };
 
 #include <cstring> 
@@ -17,8 +17,6 @@ int main(int argc, char *argv[])
 {
     const string file_path = "data.dat";
 
-  
-    //list<int> data_list;
     Data data = {
         0,
         0
@@ -27,13 +25,23 @@ int main(int argc, char *argv[])
     PlainCRUD<Data> plainCRUD;
     plainCRUD.load(file_path, data);
 
-    cout << data.i << endl;
+    cout << "after load" << endl;
+    cout << "id: ->" << data.id << "<-" << endl;
+    cout << "name: ->" << data.name << "<-" << endl;
 
-    data.i = 12334;
-    cout << data.i << endl;
+    cout << endl;
+
+    cout << "editing..." << endl;
+    data.id = 1234;
+    snprintf(data.name, 50, "asd");
+
+    cout << endl;
+
+    cout << "after edit" << endl;
+    cout << "id: ->" << data.id << "<-" << endl;
+    cout << "name: ->" << data.name << "<-" << endl;
 
     plainCRUD.write(data);
-
 
     system("pause");
 }
