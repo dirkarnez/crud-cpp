@@ -7,10 +7,12 @@
 using namespace std;
 
 struct Data {
-    int a;
-    string b;
+    int i;
+    double d;
 };
- 
+
+#include <cstring> 
+
 int main(int argc, char *argv[])
 {
     const string file_path = "data.dat";
@@ -24,11 +26,23 @@ int main(int argc, char *argv[])
 
     /**/
 
-    const list<Data> data_list = {};
+  
+    list<int> data_list;
+    PlainCRUD<list<int>> plainCRUD;
+    plainCRUD.load(file_path, data_list);
 
-    PlainCRUD<Data> plainCRUD;
-    plainCRUD.load(file_path);
-    plainCRUD.write(Data{123});
+    //data_list.push_back(123);
+    //plainCRUD.write(data_list);
+
+    //plainCRUD.read(data_list);
+
+    for (int n : data_list) {
+        cout << n << '\n';
+    }
+
+   //
+
+    //
 
     system("pause");
 

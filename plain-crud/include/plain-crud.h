@@ -10,33 +10,44 @@ template <typename DataType>
 class PlainCRUD {
 private:
 	fstream file;
-	DataType data;
 public:
-	void load(string file_path);
-	void write(DataType data);
+	void load(string file_path, DataType& data);
+	void read(DataType& data);
+	void write(DataType& data);
 	~PlainCRUD();
 };
 
 template <typename DataType>
-void PlainCRUD<DataType>::load(string file_path)
+void PlainCRUD<DataType>::load(string file_path, DataType& data)
 {
-	this->file.open(file_path, fstream::in | fstream::out | fstream::trunc | fstream::binary);
+	this->file.open(file_path, fstream::in | fstream::out | fstream::binary);
 	if (this->file.fail()) {
-		cerr << "Failed to open file";
+		this->file.open(file_path, fstream::out | fstream::binary);
+		this->file.close();
+		this->file.open(file_path, fstream::in | fstream::out | fstream::binary);
 	}
 
-	while (!this->file.eof()) {
-		this->file >> this->data;
-		// fh.read((char*)&h.id, sizeof(h.id));
-	};
-
-	cout << "this->data" << endl;
+	read(data);
 }
 
 template <typename DataType>
-void PlainCRUD<DataType>::write(DataType data)
+void PlainCRUD<DataType>::read(DataType& data)
 {
-	this->file.write((char*)&data, sizeof(data));
+
+		this->file.seekg(0, ios::beg);
+		//memset(&data, 0, sizeof(data));
+		this->file.read(reinterpret_cast<char*>(&data), sizeof(DataType));
+	
+
+}
+
+template <typename DataType>
+void PlainCRUD<DataType>::write(DataType& data)
+{
+	//this->file.seekp(0, ios::beg);
+	//this->file.write((char*)&data, sizeof(data));
+	this->file.seekp(0, ios::beg);
+	this->file.write(reinterpret_cast<const char*>(&data), sizeof(data));
 }
 
 template <typename DataType>
